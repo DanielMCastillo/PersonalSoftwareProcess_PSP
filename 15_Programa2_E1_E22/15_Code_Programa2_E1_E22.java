@@ -7,16 +7,16 @@
 import java.io.*;  //Librería IO 
 
 public class Programa2{
+	
 	public static void main (String args[]){
 		System.out.println("Ingresa la ruta del archivo: ");
-		String ruta = LeerArchivo.consolaCadena();
+		String ruta = LeerArchivo.consolalinea();
 		contarLOC.contar(ruta);
-		
 	}	
 }
 
 class LeerArchivo {
-    public static String consolaCadena(){
+    public static String consolalinea(){
             InputStreamReader entrada = new InputStreamReader(System.in);
             BufferedReader buffer = new BufferedReader(entrada);
             String stringentrada="";
@@ -34,11 +34,11 @@ class contarLOC{
 	public static void contar(String nombreArchivo){
 		int contarClase = 0;
 		int contarLOC = 0;
-		int [] inicioClase = new int [50];
-		int [] finClase = new int [50];
-		String [] nombreClase = new String[50];
-		int [] contarMetodo= new int [50];
-		for(int i = 0;i<50;i++){
+		int [] inicioClase = new int [1000];
+		int [] finClase = new int [1000];
+		String [] nombreClase = new String[1000];
+		int [] contarMetodo= new int [1000];
+		for(int i = 0;i<1000;i++){
 			inicioClase[i]=0;
 			finClase[i]=0;
 			contarMetodo[i]=0;
@@ -51,19 +51,22 @@ class contarLOC{
 			try{	
 				lector = new FileReader(archivo);
 				readerArchivo = new BufferedReader(lector);
-				String cadena;
-				while ((cadena = readerArchivo.readLine())!=null){//Recorre el archivo linea por linea
-					cadena = cadena.replaceAll("^\\s*","");
-					if(cadena.startsWith("//")){
+				String linea;
+				while ((linea = readerArchivo.readLine())!=null){//Recorre el archivo linea por linea
+					linea = linea.replaceAll("^\\s*","");
+					if(linea.startsWith("//")){
 						contarLOC--;
 					}
-					if(!cadena.equals("") || cadena.startsWith("//")){
+					if(!linea.equals("") || linea.startsWith("//")){
 						contarLOC++;
 					}
-					if(cadena.contains("class") && cadena.contains("{") && cadena.contains("(")==false
-						&& cadena.contains(")")==false && cadena.contains("=")==false){//Entra si encuentra una clase
+					if (linea.startsWith("/*") && linea.endsWith("*/")) {
+						contarLOC--;
+					}
+					if(linea.contains("class") && linea.contains("{") && linea.contains("(")==false
+						&& linea.contains(")")==false && linea.contains("=")==false){//Entra si encuentra una clase
 						contarClase++;
-						String nomClase = cadena;
+						String nomClase = linea;
 						nomClase = nomClase.replaceFirst("public","");
 						nomClase = nomClase.replaceFirst("private","");
 						nomClase = nomClase.replaceFirst("class","");
@@ -71,7 +74,7 @@ class contarLOC{
 						inicioClase[contarClase] = contarLOC;
 						finClase[contarClase-1]=contarLOC;
 					}
-					if((cadena.contains("public")||cadena.contains("private"))&&cadena.contains("(")&&cadena.contains(")")&&cadena.contains("{")&&(cadena.contains("&&")==false)){
+					if((linea.contains("public")||linea.contains("private"))&&linea.contains("(")&&linea.contains(")")&&linea.contains("{")&&(linea.contains("&&")==false)){
 						contarMetodo[contarClase]=contarMetodo[contarClase]+1;	
 					}
 				}
