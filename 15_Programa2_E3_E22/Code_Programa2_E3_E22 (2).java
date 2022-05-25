@@ -1,12 +1,12 @@
 /*************************************************************************************/
 /* Program Name: Programa 2 */
 /* Name: Daniel Alejandro Morales Castillo */
-/* Date: 09/05/2022 */
-/* Description: Programa 3 de PSP - Complejidad Ciclomatica */
+/* Date: 04/05/2022 */
+/* Description: Programa 2 de PSP - Contar lineas */
 /*************************************************************************************/
 import java.io.*;  //Librería IO 
 
-public class Programa2{
+public class Code_Programa2_E3_E22{
 	
 	public static void main (String args[]){
 		System.out.println("Ingresa la ruta del archivo: ");
@@ -28,6 +28,7 @@ class LeerArchivo {
             return stringentrada;
         }
     }
+	
 }
 
 class contarLOC{
@@ -36,6 +37,7 @@ class contarLOC{
 		int contarLOC = 0;
 		int [] inicioClase = new int [1000];
 		int [] finClase = new int [1000];
+		String [] nombreClase = new String[1000];
 		int [] contarMetodo= new int [1000];
 		for(int i = 0;i<1000;i++){
 			inicioClase[i]=0;
@@ -62,8 +64,7 @@ class contarLOC{
 					if (linea.startsWith("/*") && linea.endsWith("*/")) {
 						contarLOC--;
 					}
-					if(linea.contains("class") && linea.contains("{") && linea.contains("(")==false
-						&& linea.contains(")")==false && linea.contains("=")==false){//Entra si encuentra una clase
+					if(linea.contains("class") && linea.contains("{") && linea.contains("(")==false && linea.contains(")")==false && linea.contains("=")==false){//Entra si encuentra una clase
 						contarClase++;
 						String nomClase = linea;
 						nomClase = nomClase.replaceFirst("public","");
@@ -74,7 +75,7 @@ class contarLOC{
 						finClase[contarClase-1]=contarLOC;
 					}
 					if((linea.contains("public")||linea.contains("private"))&&linea.contains("(")&&linea.contains(")")&&linea.contains("{")&&(linea.contains("&&")==false)){
-						contarMetodo[contarClase]=contarMetodo[contarClase]+1;
+						contarMetodo[contarClase]=contarMetodo[contarClase]+1;	
 					}
 				}
 				finClase[contarClase] = contarLOC+1;

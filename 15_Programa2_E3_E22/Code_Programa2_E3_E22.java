@@ -6,7 +6,7 @@
 /*************************************************************************************/
 import java.io.*;  //Librería IO 
 
-public class Programa2{
+public class Code_Programa2_E3_E22{
 	
 	public static void main (String args[]){
 		System.out.println("Ingresa la ruta del archivo: ");
@@ -28,6 +28,7 @@ class LeerArchivo {
             return stringentrada;
         }
     }
+	
 }
 
 class contarLOC{
@@ -63,8 +64,7 @@ class contarLOC{
 					if (linea.startsWith("/*") && linea.endsWith("*/")) {
 						contarLOC--;
 					}
-					if(linea.contains("class") && linea.contains("{") && linea.contains("(")==false
-						&& linea.contains(")")==false && linea.contains("=")==false){//Entra si encuentra una clase
+					if(linea.contains("class") && linea.contains("{") && linea.contains("(")==false && linea.contains(")")==false && linea.contains("=")==false){//Entra si encuentra una clase
 						contarClase++;
 						String nomClase = linea;
 						nomClase = nomClase.replaceFirst("public","");
